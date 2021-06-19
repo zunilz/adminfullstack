@@ -4,14 +4,16 @@ using Admin.Core.Library;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Admin.Core.Library.Migrations
 {
     [DbContext(typeof(AdminDbContext))]
-    partial class AdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619185455_AddedMappingETY")]
+    partial class AddedMappingETY
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,6 +44,9 @@ namespace Admin.Core.Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProductKeywordsId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,6 +54,8 @@ namespace Admin.Core.Library.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("KeywordId");
+
+                    b.HasIndex("ProductKeywordsId");
 
                     b.ToTable("KeywordTags");
                 });
@@ -126,23 +133,49 @@ namespace Admin.Core.Library.Migrations
 
                     b.HasKey("ProductKeywordsId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("ProductKeywords");
                 });
 
-            modelBuilder.Entity("Admin.Core.Library.Entity.ProductKeywords", b =>
+            modelBuilder.Entity("ProductProductKeywords", b =>
                 {
+                    b.Property<int>("ProductKeywordsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductKeywordsId", "ProductsProductId");
+
+                    b.HasIndex("ProductsProductId");
+
+                    b.ToTable("ProductProductKeywords");
+                });
+
+            modelBuilder.Entity("Admin.Core.Library.Entity.KeywordTags", b =>
+                {
+                    b.HasOne("Admin.Core.Library.Entity.ProductKeywords", null)
+                        .WithMany("KeywordTags")
+                        .HasForeignKey("ProductKeywordsId");
+                });
+
+            modelBuilder.Entity("ProductProductKeywords", b =>
+                {
+                    b.HasOne("Admin.Core.Library.Entity.ProductKeywords", null)
+                        .WithMany()
+                        .HasForeignKey("ProductKeywordsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Admin.Core.Library.Entity.Product", null)
-                        .WithMany("ProductKeywords")
-                        .HasForeignKey("ProductId")
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Admin.Core.Library.Entity.Product", b =>
+            modelBuilder.Entity("Admin.Core.Library.Entity.ProductKeywords", b =>
                 {
-                    b.Navigation("ProductKeywords");
+                    b.Navigation("KeywordTags");
                 });
 #pragma warning restore 612, 618
         }

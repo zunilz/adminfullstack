@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.Core.Library;
+using Admin.Core.Library.Repository;
+using Admin.Core.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,8 +32,8 @@ namespace Admin.Core
             services.AddControllers();
             services.AddDbContext<AdminDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            
-
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddAutoMapper(typeof(AdminMappings));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,14 +4,16 @@ using Admin.Core.Library;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Admin.Core.Library.Migrations
 {
     [DbContext(typeof(AdminDbContext))]
-    partial class AdminDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210619190241_AddedMappingETY3")]
+    partial class AddedMappingETY3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,11 +135,13 @@ namespace Admin.Core.Library.Migrations
 
             modelBuilder.Entity("Admin.Core.Library.Entity.ProductKeywords", b =>
                 {
-                    b.HasOne("Admin.Core.Library.Entity.Product", null)
+                    b.HasOne("Admin.Core.Library.Entity.Product", "Product")
                         .WithMany("ProductKeywords")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Admin.Core.Library.Entity.Product", b =>

@@ -28,7 +28,6 @@ namespace Admin.Core.Library.Entity
         public string UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
 
-
-        //public List<Accessory> Accessories { get; set; }
+        public List<ProductKeywords> ProductKeywords{ get; set; }
     }
 }

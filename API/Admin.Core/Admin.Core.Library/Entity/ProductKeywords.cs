@@ -24,10 +24,12 @@ namespace Admin.Core.Library.Entity
         public string UpdatedBy { get; set; }
         public bool IsDeleted { get; set; }
 
-        [Required]
+   
         public int ProductId { get; set; }
-        [Required]
+  
         public int KeywordId { get; set; }
 
+        //public Product Product { get; set; }
+        //public KeywordTags KeywordTags { get; set; }
     }
 }
