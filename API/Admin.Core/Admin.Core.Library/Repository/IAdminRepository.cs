@@ -21,7 +21,13 @@ namespace Admin.Core.Library.Repository
         /// </summary>
         /// <param name="keywords">One or more Keywords</param>
         /// <returns>List of Products</returns>
-        ICollection<Product> GetProducts(string[] keywords);
+        ICollection<Product> GetProducts(int[] keywordIds);
+        /// <summary>
+        /// Get Product by product id supplied
+        /// </summary>
+        /// <param name="productId">Id of the product</param>
+        /// <returns>Product</returns>
+        public Product GetProduct(int productId);
         /// <summary>
         /// Add new Keyword to Product and Accessories
         /// </summary>

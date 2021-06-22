@@ -132,20 +132,41 @@ namespace Admin.Core.Library.Repository
         /// </summary>
         /// <param name="keywords">One or more Keywords</param>
         /// <returns>List of Products</returns>
-        public ICollection<Product> GetProducts(string[] keywords)
+        public ICollection<Product> GetProducts(int[] keywordIds)
         {
-            return _dbContext.Products.Include(p => p.ProductKeywords).Where(p => p.IsDeleted == false).ToList();
+            //return _dbContext.Products.Include(p => p.ProductKeywords).Where(p => p.IsDeleted == false).ToList();
             //var keywordIdList = _dbContext.KeywordTags.Where(p => p.IsDeleted == false
             //&& keywords.Contains(p.KeywordName)
             //).ToList();
 
-            //return _dbContext.Products.Include(p 
-            //    => p.ProductKeywords).Where(p => p.IsDeleted == false
-            //    && keywordIdList.Contains(p.)
-            //    ).ToList();
+            var objList = _dbContext.Products.Include(p
+                => p.ProductKeywords).Where(p => p.IsDeleted == false && p.ProductKeywords.Any(pk=>keywordIds.Contains(pk.KeywordId)))
+                .ToList();
 
+            return objList;
 
         }
+
+
+        /// <summary>
+        /// Get Product by product id supplied
+        /// </summary>
+        /// <param name="productId">Id of the product</param>
+        /// <returns>Product</returns>
+        public Product GetProduct(int productId)
+        {
+            //return _dbContext.Products.Include(p => p.ProductKeywords).Where(p => p.IsDeleted == false).ToList();
+            //var keywordIdList = _dbContext.KeywordTags.Where(p => p.IsDeleted == false
+            //&& keywords.Contains(p.KeywordName)
+            //).ToList();
+
+            var objList = _dbContext.Products.Include(p
+                => p.ProductKeywords).Where(p => p.IsDeleted == false && p.ProductId == productId).SingleOrDefault();
+
+            return objList;
+
+        }
+
 
         /// <summary>
         /// Update EF

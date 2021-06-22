@@ -5,3 +5,5 @@
 /API/Admin.Core/Admin.Core/bin/Debug/netcoreapp3.1
 /API/Admin.Core/Admin.Core.Library/bin/Debug/netcoreapp3.1
 /API/Admin.Core/Admin.Core.Library/obj
+/API/Admin.Core/Admin.Core.Tests/bin/Debug/netcoreapp3.1
+/API/Admin.Core/Admin.Core.Tests/obj

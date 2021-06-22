@@ -29,6 +29,8 @@ Initial deployment would be in Azure cloud. In case of cross platform migration,
 
 Imp:
 
+Secure the Apps
 API Versioning
 Repository Service pattern
 Exception handling
+Lazy loading
