@@ -1,6 +1,6 @@
 .example-card {
     max-width: 400px;
-    min-width: 400px;
+    min-width: 300px;
     min-height: 300px;
     padding: 1rem;
     margin: 2rem;
@@ -23,9 +23,18 @@
     /* width: 100%; */
     padding: 1rem;
     margin: 1rem;
-     
-    
   }
+
+
+  .mat-snack-bar-container {
+    
+    background: #8bdaf9 !important; 
+}
+
+.snackbar-error {
+    background: #8bdaf9; 
+  }
+  
 
   
   .mat-subtitle-toolbar {

@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ThemePalette } from '@angular/material/core';
 import { KeywordModel } from '../../models/keyword.model';
 import { KeywordResponseModel } from '../../models/keyword-response.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-product-manage',
@@ -40,7 +41,8 @@ export class ProductManageComponent implements OnInit {
 
 
 
-  constructor(private _adminService: AdminService) {
+  constructor(private _adminService: AdminService,
+    private _snackBar: MatSnackBar) {
 
     this.products = [];
     this.keywords = [];
@@ -54,6 +56,18 @@ export class ProductManageComponent implements OnInit {
 
     this.loadKeywords();
     this.loadProducts();
+
+    this.openSnackBar("Loaded all Products and Keywords", "Ok");
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 5000,
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      panelClass: ['snackbar-error']
+    });
   }
 
 
@@ -70,6 +84,7 @@ export class ProductManageComponent implements OnInit {
 
       this.keywordsForChips.push(kwc);
       console.log('adddd');
+      this.openSnackBar("Added search Keyword", "Ok");
     }
 
     // Clear the input value
@@ -84,6 +99,7 @@ export class ProductManageComponent implements OnInit {
 
     if (index >= 0) {
       this.keywordsForChips.splice(index, 1);
+      this.openSnackBar("Removed search Keyword", "Ok");
     }
 
     if (this.keywordsForChips.length == 0)
@@ -110,7 +126,7 @@ export class ProductManageComponent implements OnInit {
 
       //this.keywordsForChips = this.keywords;
       this.keywords.map(k => {
-        // this.keywordsForChips.push(k);
+        this.keywordsForChips.push(k);
       });
     },
       errorResponse => {
@@ -122,7 +138,7 @@ export class ProductManageComponent implements OnInit {
   clearKwChips() {
     this.keywordsForChips = [];
     this.loadProducts();
-
+    this.openSnackBar("Cleared all search Keywords", "Ok");
   }
 
 
@@ -192,8 +208,10 @@ export class ProductManageComponent implements OnInit {
   addKeyword(product: ProductModel) {
 
     this._adminService.Add_Keyword(product).subscribe(response => {
+      this.openSnackBar("Successfully added Keyword: " + product.keyword, "Ok");
       this.loadKeywords();
       this.loadProducts();
+
       //this.refreshProductsModel(product);
     },
       errorResponse => {
@@ -207,8 +225,10 @@ export class ProductManageComponent implements OnInit {
   deleteKeyword(product: ProductModel, keyword: KeywordModel) {
 
     this._adminService.Delete_Keyword(product, keyword).subscribe(response => {
+      this.openSnackBar("Successfully removed Keyword ", "Ok");
       this.loadKeywords();
       this.loadProducts();
+
       //this.refreshProductsModel(product);
     },
       errorResponse => {
@@ -244,6 +264,7 @@ export class ProductManageComponent implements OnInit {
     });
 
     this._adminService.Update_Keyword(product, productKeywordsIdToUpdate).subscribe(response => {
+      this.openSnackBar("Successfully updated old Keyword to : " + product.keyword, "Ok");
       this.loadKeywords();
       this.loadProducts();
       //this.refreshProductsModel(product);
@@ -288,7 +309,5 @@ export interface ChipColor {
 export interface Fruit {
   name: string;
 }
-
-
 
 

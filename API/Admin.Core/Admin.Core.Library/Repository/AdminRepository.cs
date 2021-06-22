@@ -39,7 +39,7 @@ namespace Admin.Core.Library.Repository
             KeywordTags keywordTags = new KeywordTags();
 
             //If entered Keyword exists already in data store find the entity and update product mapping 
-            if (_dbContext.KeywordTags.Any(k => k.KeywordName == keyword))
+            if (_dbContext.KeywordTags.Any(k => k.KeywordName.ToLower() == keyword.ToLower()))
             {
                 keywordTags = _dbContext.KeywordTags.FirstOrDefault(k => k.KeywordName == keyword);
             }
