@@ -19,7 +19,7 @@ namespace Admin.Core.Tests
         /// Testing response from Products API  
         /// </summary>
         [Fact]
-        public void GetProducts_Return_Products_Test()
+        public void GetProducts_Return_All_Products_Test()
         {
             var fakeProducts = A.CollectionOfDummy<Product>(5).ToList();
             var repo = A.Fake<IAdminRepository>();
@@ -48,6 +48,44 @@ namespace Admin.Core.Tests
             var resultProductsStr = JsonConvert.SerializeObject(resultProducts);
 
             Assert.Equal(fakeProductsMappedStr, resultProductsStr); 
+
+        }
+
+
+
+        /// <summary>
+        /// Testing response from Keywords API  
+        /// </summary>
+        [Fact]
+        public void GetProducts_Return_All_Keywords_Test()
+        {
+            var fakeKeywordTags = A.CollectionOfDummy<KeywordTags>(5).ToList();
+            var repo = A.Fake<IAdminRepository>();
+            //auto mapper configuration
+            AdminMappings am = new AdminMappings();
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new AdminMappings());
+            });
+            var mapper = mockMapper.CreateMapper();
+
+
+
+            A.CallTo(() => repo.GetKeywordTags()).Returns(fakeKeywordTags);
+            var controller = new AdminController(null, mapper, repo);
+            var result = controller.GetKeywords();
+
+
+
+            var resultOk = result as OkObjectResult;
+            var resultKeywordTags = resultOk.Value as IEnumerable<KeywordTagsDto>;
+
+            var fakeKeywordTagsMapped = mapper.Map<List<KeywordTags>, List<KeywordTagsDto>>(fakeKeywordTags) as IEnumerable<KeywordTagsDto>;
+
+            var fakeKeywordTagsMappedStr = JsonConvert.SerializeObject(fakeKeywordTagsMapped);
+            var resultKeywordTagsStr = JsonConvert.SerializeObject(resultKeywordTags);
+
+            Assert.Equal(fakeKeywordTagsMappedStr, resultKeywordTagsStr);
 
         }
     }
