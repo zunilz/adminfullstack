@@ -11,8 +11,9 @@ export const environment = {
   },
   endPoints: {
     Admin:{
-      baseUrl: "http://localhost:5000/",
+      baseUrl: "https://dadminapi.azurewebsites.net/",
       getProductsAll: "adminapi/products",
+      getProduct: "adminapi/product",
       getProductByKeywords: "adminapi/products",
       getKeywordsAll: "adminapi/keywords",
       addKeyword: "adminapi/keyword/add",
